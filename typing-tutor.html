@@ -1,0 +1,1192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Keystroke — Learn to Type</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#12141c;
+    --surface:#1a1d29;
+    --surface-2:#232738;
+    --surface-3:#2c3142;
+    --accent:#f2b705;
+    --accent-dim:#c99a04;
+    --accent-soft:rgba(242,183,5,0.14);
+    --success:#6fcf97;
+    --success-soft:rgba(111,207,151,0.15);
+    --error:#ef6f6c;
+    --error-soft:rgba(239,111,108,0.16);
+    --text:#edeef2;
+    --text-muted:#8b90a1;
+    --text-dim:#5b6072;
+    --border:#2a2e3d;
+    --radius-sm:6px;
+    --radius:12px;
+    --radius-lg:20px;
+    --font-ui:'Space Grotesk', system-ui, sans-serif;
+    --font-mono:'JetBrains Mono', 'Courier New', monospace;
+  }
+
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    background:var(--bg);
+    color:var(--text);
+    font-family:var(--font-ui);
+    line-height:1.5;
+    -webkit-font-smoothing:antialiased;
+  }
+  ::selection{background:var(--accent-soft);color:var(--accent);}
+
+  a{color:inherit;}
+  button{
+    font-family:var(--font-ui);
+    cursor:pointer;
+    border:none;
+    background:none;
+    color:inherit;
+  }
+  button:focus-visible, input:focus-visible, .lesson-card:focus-visible{
+    outline:2px solid var(--accent);
+    outline-offset:2px;
+  }
+
+  .wrap{
+    max-width:1080px;
+    margin:0 auto;
+    padding:0 clamp(16px, 4vw, 40px);
+  }
+
+  /* ---------- Header ---------- */
+  header.site{
+    position:sticky;
+    top:0;
+    z-index:50;
+    background:rgba(18,20,28,0.88);
+    backdrop-filter:blur(10px);
+    border-bottom:1px solid var(--border);
+  }
+  .site-inner{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    padding:14px clamp(16px, 4vw, 40px);
+    max-width:1080px;
+    margin:0 auto;
+    gap:16px;
+  }
+  .logo{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    font-weight:700;
+    font-size:1.15rem;
+    letter-spacing:-0.01em;
+  }
+  .logo-mark{
+    width:30px;height:30px;
+    border-radius:8px;
+    background:var(--accent);
+    display:flex;align-items:center;justify-content:center;
+    color:#1a1500;
+    font-family:var(--font-mono);
+    font-weight:700;
+    font-size:0.95rem;
+    flex-shrink:0;
+  }
+  nav.levels{
+    display:flex;
+    gap:4px;
+    background:var(--surface);
+    padding:4px;
+    border-radius:999px;
+    border:1px solid var(--border);
+  }
+  nav.levels button{
+    padding:8px 16px;
+    border-radius:999px;
+    font-size:0.88rem;
+    font-weight:500;
+    color:var(--text-muted);
+    transition:background 0.2s, color 0.2s;
+    white-space:nowrap;
+  }
+  nav.levels button.active{
+    background:var(--accent);
+    color:#1a1500;
+    font-weight:600;
+  }
+  nav.levels button:not(.active):hover{
+    color:var(--text);
+  }
+  .header-stat{
+    font-family:var(--font-mono);
+    font-size:0.82rem;
+    color:var(--text-muted);
+    display:flex;
+    gap:4px;
+    align-items:baseline;
+  }
+  .header-stat b{color:var(--accent);font-weight:600;}
+
+  @media (max-width:720px){
+    .site-inner{flex-wrap:wrap;}
+    nav.levels{order:3;width:100%;justify-content:space-between;}
+    nav.levels button{flex:1;text-align:center;padding:8px 6px;}
+    .header-stat{display:none;}
+  }
+
+  /* ---------- Hero ---------- */
+  .hero{
+    padding:clamp(40px,7vw,72px) 0 clamp(32px,5vw,56px);
+  }
+  .hero-grid{
+    display:grid;
+    grid-template-columns:1.05fr 0.95fr;
+    gap:clamp(24px,5vw,56px);
+    align-items:center;
+  }
+  @media (max-width:860px){
+    .hero-grid{grid-template-columns:1fr;}
+  }
+  .hero h1{
+    font-size:clamp(2.1rem, 5vw, 3.4rem);
+    line-height:1.05;
+    letter-spacing:-0.02em;
+    margin:0 0 16px;
+    font-weight:700;
+  }
+  .hero h1 .underline{
+    text-decoration:underline;
+    text-decoration-color:var(--accent);
+    text-decoration-thickness:3px;
+    text-underline-offset:6px;
+  }
+  .hero p.lead{
+    color:var(--text-muted);
+    font-size:clamp(1rem,1.6vw,1.15rem);
+    max-width:46ch;
+    margin:0 0 28px;
+  }
+  .hero-ctas{
+    display:flex;
+    gap:12px;
+    flex-wrap:wrap;
+  }
+  .btn{
+    padding:12px 22px;
+    border-radius:var(--radius-sm);
+    font-weight:600;
+    font-size:0.95rem;
+    transition:transform 0.15s, background 0.15s, border-color .15s;
+    display:inline-flex;
+    align-items:center;
+    gap:8px;
+  }
+  .btn:active{transform:translateY(1px);}
+  .btn-primary{background:var(--accent);color:#1a1500;}
+  .btn-primary:hover{background:#ffc61a;}
+  .btn-ghost{background:transparent;border:1px solid var(--border);color:var(--text);}
+  .btn-ghost:hover{border-color:var(--text-dim);}
+  .btn-sm{padding:8px 14px;font-size:0.85rem;}
+
+  /* Hero demo card */
+  .demo-card{
+    background:var(--surface);
+    border:1px solid var(--border);
+    border-radius:var(--radius-lg);
+    padding:clamp(18px,3vw,26px);
+    position:relative;
+  }
+  .demo-card .demo-label{
+    font-size:0.78rem;
+    color:var(--text-dim);
+    margin-bottom:14px;
+    display:flex;
+    justify-content:space-between;
+  }
+  .demo-text{
+    font-family:var(--font-mono);
+    font-size:clamp(1rem,2vw,1.25rem);
+    letter-spacing:0.01em;
+    line-height:1.7;
+    color:var(--text-dim);
+    min-height:5.1em;
+    cursor:text;
+  }
+  .demo-footer{
+    margin-top:16px;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    font-family:var(--font-mono);
+    font-size:0.85rem;
+    color:var(--text-muted);
+  }
+  .demo-footer .stat-value{color:var(--accent);font-weight:600;}
+
+  .char{position:relative;}
+  .char.correct{color:var(--success);}
+  .char.incorrect{color:var(--error);background:var(--error-soft);border-radius:2px;}
+  .char.current{
+    border-bottom:2px solid var(--accent);
+  }
+  .hidden-input{
+    position:absolute;
+    opacity:0;
+    pointer-events:none;
+    height:1px;width:1px;
+  }
+
+  /* ---------- Section headers ---------- */
+  .section{padding:clamp(28px,5vw,48px) 0;}
+  .section-head{
+    display:flex;
+    justify-content:space-between;
+    align-items:flex-end;
+    margin-bottom:22px;
+    gap:16px;
+    flex-wrap:wrap;
+  }
+  .section-head h2{
+    font-size:clamp(1.3rem,2.4vw,1.7rem);
+    margin:0 0 6px;
+    letter-spacing:-0.01em;
+  }
+  .section-head p{margin:0;color:var(--text-muted);font-size:0.92rem;max-width:52ch;}
+  .level-progress{
+    font-family:var(--font-mono);
+    font-size:0.82rem;
+    color:var(--text-muted);
+    display:flex;
+    align-items:center;
+    gap:10px;
+    white-space:nowrap;
+  }
+  .level-progress .bar{
+    width:110px;height:6px;
+    background:var(--surface-2);
+    border-radius:99px;
+    overflow:hidden;
+  }
+  .level-progress .bar span{
+    display:block;height:100%;
+    background:var(--accent);
+    border-radius:99px;
+    transition:width 0.3s;
+  }
+
+  /* ---------- Lesson grid ---------- */
+  .lesson-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fill, minmax(220px, 1fr));
+    gap:14px;
+  }
+  .lesson-card{
+    text-align:left;
+    background:var(--surface);
+    border:1px solid var(--border);
+    border-radius:var(--radius);
+    padding:18px;
+    display:flex;
+    flex-direction:column;
+    gap:10px;
+    transition:border-color 0.15s, transform 0.15s;
+  }
+  .lesson-card:hover{border-color:var(--accent-dim);transform:translateY(-2px);}
+  .lesson-top{display:flex;justify-content:space-between;align-items:flex-start;gap:8px;}
+  .lesson-index{
+    font-family:var(--font-mono);
+    font-size:0.75rem;
+    color:var(--text-dim);
+  }
+  .lesson-badge{
+    font-size:0.68rem;
+    font-family:var(--font-mono);
+    padding:2px 8px;
+    border-radius:99px;
+    background:var(--success-soft);
+    color:var(--success);
+    white-space:nowrap;
+  }
+  .lesson-card h3{margin:0;font-size:1.02rem;}
+  .lesson-card p{margin:0;color:var(--text-muted);font-size:0.85rem;flex:1;}
+  .lesson-meta{
+    display:flex;
+    justify-content:space-between;
+    font-family:var(--font-mono);
+    font-size:0.78rem;
+    color:var(--text-dim);
+    border-top:1px solid var(--border);
+    padding-top:10px;
+  }
+  .lesson-meta b{color:var(--accent);}
+
+  /* ---------- Practice screen ---------- */
+  .practice-panel{
+    background:var(--surface);
+    border:1px solid var(--border);
+    border-radius:var(--radius-lg);
+    padding:clamp(18px,3.5vw,32px);
+  }
+  .practice-headrow{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:18px;
+    gap:12px;
+    flex-wrap:wrap;
+  }
+  .practice-headrow h3{margin:0;font-size:1.15rem;}
+  .practice-headrow .sub{font-size:0.82rem;color:var(--text-muted);font-family:var(--font-mono);}
+
+  .stat-row{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:10px;
+    margin-bottom:20px;
+  }
+  .stat-box{
+    background:var(--surface-2);
+    border-radius:var(--radius-sm);
+    padding:12px 10px;
+    text-align:center;
+  }
+  .stat-box .val{
+    font-family:var(--font-mono);
+    font-size:clamp(1.1rem,2.5vw,1.5rem);
+    font-weight:700;
+    color:var(--accent);
+    display:block;
+  }
+  .stat-box .lbl{
+    font-size:0.68rem;
+    color:var(--text-dim);
+    text-transform:uppercase;
+    letter-spacing:0.04em;
+  }
+  @media (max-width:480px){
+    .stat-row{grid-template-columns:repeat(2,1fr);}
+  }
+
+  .practice-text-box{
+    background:var(--surface-2);
+    border:1px solid var(--border);
+    border-radius:var(--radius);
+    padding:clamp(16px,3vw,26px);
+    font-family:var(--font-mono);
+    font-size:clamp(1.05rem,2.2vw,1.35rem);
+    line-height:1.85;
+    letter-spacing:0.01em;
+    color:var(--text-dim);
+    cursor:text;
+    max-height:9.5em;
+    overflow-y:auto;
+    margin-bottom:18px;
+  }
+  .practice-text-box.locked::after{
+    content:'Tap to start typing';
+    display:block;
+    margin-top:10px;
+    font-family:var(--font-ui);
+    font-size:0.78rem;
+    color:var(--text-dim);
+  }
+
+  .practice-actions{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    flex-wrap:wrap;
+    gap:10px;
+    margin-bottom:6px;
+  }
+  .practice-actions .left-actions,.practice-actions .right-actions{display:flex;gap:8px;flex-wrap:wrap;}
+
+  /* ---------- Keyboard ---------- */
+  .keyboard-wrap{margin-top:22px;}
+  .keyboard-toggle{
+    display:none;
+    margin-bottom:10px;
+  }
+  .keyboard{
+    display:flex;
+    flex-direction:column;
+    gap:6px;
+    user-select:none;
+  }
+  .krow{display:flex;gap:6px;justify-content:center;}
+  .key{
+    background:var(--surface-2);
+    border:1px solid var(--border);
+    border-radius:6px;
+    height:38px;
+    min-width:34px;
+    flex:1;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-family:var(--font-mono);
+    font-size:0.72rem;
+    color:var(--text-muted);
+    position:relative;
+    transition:background 0.1s, border-color 0.1s, color 0.1s;
+    max-width:70px;
+  }
+  .key.wide{flex:1.6;max-width:110px;}
+  .key.space{flex:8;max-width:none;}
+  .key.home::after{
+    content:'';
+    position:absolute;
+    bottom:6px;
+    width:12px;height:2px;
+    background:var(--text-dim);
+    border-radius:2px;
+  }
+  .key.active{
+    background:var(--accent);
+    border-color:var(--accent);
+    color:#1a1500;
+    font-weight:700;
+  }
+  .key.active-shift{
+    background:var(--accent-soft);
+    border-color:var(--accent-dim);
+    color:var(--accent);
+  }
+  @media (max-width:640px){
+    .key{font-size:0.6rem;height:32px;min-width:22px;}
+    .keyboard-wrap{display:none;}
+    .keyboard-wrap.show-mobile{display:block;}
+    .keyboard-toggle{display:inline-flex;}
+  }
+
+  /* ---------- Results ---------- */
+  .results-panel{
+    text-align:center;
+    padding:clamp(20px,4vw,10px) 0 4px;
+  }
+  .results-panel h3{font-size:1.4rem;margin:0 0 6px;}
+  .results-panel .msg{color:var(--text-muted);font-size:0.92rem;margin-bottom:24px;}
+  .results-stats{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:12px;
+    max-width:520px;
+    margin:0 auto 26px;
+  }
+  @media (max-width:480px){.results-stats{grid-template-columns:repeat(2,1fr);}}
+  .results-stats .box{
+    background:var(--surface-2);
+    border-radius:var(--radius);
+    padding:16px 8px;
+  }
+  .results-stats .box .val{
+    font-family:var(--font-mono);
+    font-size:1.6rem;
+    font-weight:700;
+    color:var(--accent);
+    display:block;
+  }
+  .results-stats .box .lbl{font-size:0.7rem;color:var(--text-dim);text-transform:uppercase;letter-spacing:0.04em;}
+  .results-actions{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;}
+
+  .hidden{display:none !important;}
+
+  footer.site{
+    border-top:1px solid var(--border);
+    padding:24px clamp(16px,4vw,40px);
+    text-align:center;
+    color:var(--text-dim);
+    font-size:0.8rem;
+  }
+  footer.site button{color:var(--text-muted);text-decoration:underline;font-size:0.8rem;}
+</style>
+</head>
+<body>
+
+<header class="site">
+  <div class="site-inner">
+    <div class="logo"><span class="logo-mark">Kb</span> Keystroke</div>
+    <nav class="levels" id="levelNav"></nav>
+    <div class="header-stat"><span id="headerCompleted">0</span>/<span id="headerTotal">0</span> lessons&nbsp;·&nbsp;best <b id="headerBestWpm">0</b> wpm</div>
+  </div>
+</header>
+
+<main class="wrap">
+
+  <section class="hero">
+    <div class="hero-grid">
+      <div>
+        <h1>Type without<br>looking <span class="underline">down</span>.</h1>
+        <p class="lead">A calm, structured way to build real typing speed — from your first home-row keystroke to full-paragraph tests, with live feedback every step of the way.</p>
+        <div class="hero-ctas">
+          <button class="btn btn-primary" id="startLearningBtn">Start with Basics</button>
+          <button class="btn btn-ghost" id="jumpAdvancedBtn">Jump to speed tests</button>
+        </div>
+      </div>
+      <div class="demo-card">
+        <div class="demo-label"><span>Try it right now</span><span id="demoStatus">click the text</span></div>
+        <div class="demo-text" id="demoText" tabindex="0"></div>
+        <input class="hidden-input" id="demoInput" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" />
+        <div class="demo-footer">
+          <span><span class="stat-value" id="demoWpm">0</span> wpm</span>
+          <span><span class="stat-value" id="demoAcc">100</span>% accurate</span>
+          <button class="btn btn-ghost btn-sm" id="demoResetBtn">reset</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="lessonsSection">
+    <div class="section-head">
+      <div>
+        <h2 id="levelTitle">Basic</h2>
+        <p id="levelDesc">Learn finger placement and get comfortable with every key on the home, top, and bottom rows.</p>
+      </div>
+      <div class="level-progress">
+        <span id="levelProgressLabel">0/5 done</span>
+        <span class="bar"><span id="levelProgressBar" style="width:0%"></span></span>
+      </div>
+    </div>
+    <div class="lesson-grid" id="lessonGrid"></div>
+  </section>
+
+  <section class="section hidden" id="practiceSection">
+    <div class="practice-panel">
+      <div id="practiceView">
+        <div class="practice-headrow">
+          <div>
+            <h3 id="practiceTitle">Lesson title</h3>
+            <div class="sub" id="practiceSub">Level · Type</div>
+          </div>
+          <button class="btn btn-ghost btn-sm" id="backToLessonsBtn">&larr; All lessons</button>
+        </div>
+
+        <div class="stat-row">
+          <div class="stat-box"><span class="val" id="statWpm">0</span><span class="lbl">WPM</span></div>
+          <div class="stat-box"><span class="val" id="statAcc">100</span><span class="lbl">Accuracy</span></div>
+          <div class="stat-box"><span class="val" id="statTime">0s</span><span class="lbl" id="statTimeLbl">Time</span></div>
+          <div class="stat-box"><span class="val" id="statErr">0</span><span class="lbl">Mistakes</span></div>
+        </div>
+
+        <div class="practice-text-box locked" id="practiceTextBox">
+          <span id="practiceText"></span>
+        </div>
+        <input class="hidden-input" id="practiceInput" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" />
+
+        <div class="practice-actions">
+          <div class="left-actions">
+            <button class="btn btn-ghost btn-sm" id="restartLessonBtn">Restart</button>
+          </div>
+          <div class="right-actions">
+            <button class="btn btn-ghost btn-sm keyboard-toggle" id="toggleKeyboardBtn">Show keyboard</button>
+          </div>
+        </div>
+
+        <div class="keyboard-wrap" id="keyboardWrap">
+          <div class="keyboard" id="keyboard"></div>
+        </div>
+      </div>
+
+      <div class="results-panel hidden" id="resultsView">
+        <h3 id="resultsHeading">Lesson complete</h3>
+        <p class="msg" id="resultsMsg">Nice work. Here's how you did.</p>
+        <div class="results-stats">
+          <div class="box"><span class="val" id="resWpm">0</span><span class="lbl">WPM</span></div>
+          <div class="box"><span class="val" id="resAcc">0</span><span class="lbl">Accuracy</span></div>
+          <div class="box"><span class="val" id="resTime">0s</span><span class="lbl">Time</span></div>
+          <div class="box"><span class="val" id="resErr">0</span><span class="lbl">Mistakes</span></div>
+        </div>
+        <div class="results-actions">
+          <button class="btn btn-ghost" id="retryBtn">Try again</button>
+          <button class="btn btn-primary" id="nextLessonBtn">Next lesson &rarr;</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer class="site">
+  Keystroke — practice a little every day. <button id="resetProgressBtn">Reset all progress</button>
+</footer>
+
+<script>
+/* =========================================================
+   Keystroke — typing tutor logic
+   ========================================================= */
+
+/* ---------- Lesson content ---------- */
+
+const LEVELS = [
+  {
+    id: 'basic',
+    name: 'Basic',
+    title: 'Basic',
+    desc: 'Learn finger placement and get comfortable with every key on the home, top, and bottom rows.',
+    lessons: [
+      {
+        id: 'b1', title: 'Home Row Basics', type: 'drill',
+        desc: 'Meet A S D F and J K L ; — where your fingers rest.',
+        text: `asdf jkl; asdf jkl; fjfj dkdk slsl a;a; asdf jkl; fdsa jkl; asdf jkl; fj dk sl a; asdf jkl;`
+      },
+      {
+        id: 'b2', title: 'Top Row Reach', type: 'drill',
+        desc: 'Stretch up to Q W E R T Y U I O P without losing home row.',
+        text: `qqq www eee rrr ttt yyy uuu iii ooo ppp qwer tyui qwer tyui asdf jkl; qwerty uiop asdf jkl;`
+      },
+      {
+        id: 'b3', title: 'Bottom Row Reach', type: 'drill',
+        desc: 'Drop down to Z X C V B N M and the punctuation beside it.',
+        text: `zzz xxx ccc vvv bbb nnn mmm zxcv bnm, zxcv bnm, asdf jkl; zxcv bnm,./ asdf jkl; zxcv bnm,.`
+      },
+      {
+        id: 'b4', title: 'Home Row Words', type: 'words',
+        desc: 'Your first real words, built only from reachable keys.',
+        text: `sad ask dad fall lass jak flask salad asks a lad has a sad flask a lass asks dad a salad`
+      },
+      {
+        id: 'b5', title: 'Common Short Words', type: 'words',
+        desc: 'The most frequent words in English, typed as a flowing line.',
+        text: `the and for you are but not all can had her was one our out day get has him his how man`
+      }
+    ]
+  },
+  {
+    id: 'intermediate',
+    name: 'Intermediate',
+    title: 'Intermediate',
+    desc: 'Move from single words to full sentences, capital letters, numbers, and punctuation.',
+    lessons: [
+      {
+        id: 'i1', title: 'Full Sentences', type: 'sentence',
+        desc: 'Type complete thoughts at a steady, even pace.',
+        text: `The quick fox runs near the old barn every morning before the sun rises high above the hills.`
+      },
+      {
+        id: 'i2', title: 'Punctuation Practice', type: 'sentence',
+        desc: 'Commas, apostrophes, and quotation marks in context.',
+        text: `She said, "I can't believe it's already noon," and laughed, shaking her head in disbelief.`
+      },
+      {
+        id: 'i3', title: 'Capitals & Shift', type: 'sentence',
+        desc: 'Reaching for Shift without breaking your rhythm.',
+        text: `Maria Lopez visited New York City last spring to see the Statue of Liberty with her family.`
+      },
+      {
+        id: 'i4', title: 'Numbers Row', type: 'sentence',
+        desc: 'Blend digits into normal sentences smoothly.',
+        text: `In 2024 the team scored 3 goals in 90 minutes, finishing the season with 12 wins and 4 losses.`
+      },
+      {
+        id: 'i5', title: 'Symbols & Signs', type: 'sentence',
+        desc: 'The keys above the numbers: @ # $ % & and friends.',
+        text: `Update the file @config: set "timeout" = 30 & "retries" = 5 (max) before you push the change!`
+      }
+    ]
+  },
+  {
+    id: 'advanced',
+    name: 'Advanced',
+    title: 'Advanced',
+    desc: 'Build real speed with longer passages, code-like text, and timed tests.',
+    lessons: [
+      {
+        id: 'a1', title: 'Speed Paragraph I', type: 'paragraph',
+        desc: 'A short, flowing passage to build rhythm across longer text.',
+        text: `The lighthouse keeper climbed the spiral stairs each evening, counting the steps out of habit rather than need. From the top, the sea looked calm, though he knew a storm could rise within the hour. He lit the lamp, checked the glass for salt, and settled into the small chair by the window to wait out the night.`
+      },
+      {
+        id: 'a2', title: 'Speed Paragraph II', type: 'paragraph',
+        desc: 'Denser vocabulary to push your accuracy under load.',
+        text: `Modern cities depend on infrastructure most residents rarely notice: buried cables, pressurized pipes, and layered permissions that keep water flowing and power constant. Engineers describe reliability not as an absence of failure but as a system's ability to recover quickly, quietly, and without anyone downstream ever knowing something went wrong.`
+      },
+      {
+        id: 'a3', title: 'Code-Style Text', type: 'paragraph',
+        desc: 'Brackets, symbols, and camelCase for a programmer\'s workflow.',
+        text: `function addNumbers(a, b) { return a + b; } const total = addNumbers(12, 8); if (total > 10) { console.log("Sum is large:", total); } else { console.log("Sum:", total); }`
+      },
+      {
+        id: 'a4', title: '60-Second Test', type: 'timed', duration: 60,
+        desc: 'A full minute against the clock — this is where WPM counts.',
+        text: `Great writing rarely happens on the first attempt; it happens through careful revision, patient rereading, and a willingness to cut anything that does not serve the reader. A skilled editor treats every sentence as a small machine, checking that each part still has a job to do once the surrounding pieces have changed. Speed on the keyboard matters less than the ability to stay focused through a long passage without losing track of where a thought began. The best typists barely think about their hands at all; their attention stays entirely on the words appearing on the screen, which is exactly the habit these drills are meant to build over time.`
+      },
+      {
+        id: 'a5', title: 'Accuracy Challenge', type: 'paragraph',
+        desc: 'Dense punctuation — precision matters more than raw speed here.',
+        text: `"Wait," she whispered, "did you hear that?" He paused, glanced at his watch (11:47 p.m.), and replied, "Probably just the pipes; old buildings creak." Still, neither of them moved — not until the sound came again, closer this time, and unmistakably footsteps.`
+      }
+    ]
+  }
+];
+
+const HERO_DEMO_TEXT = 'the quick brown fox jumps over the lazy dog while typing this sentence';
+
+/* ---------- Shift map for virtual keyboard ---------- */
+const SHIFT_MAP = {
+  '!':'1', '@':'2', '#':'3', '$':'4', '%':'5', '^':'6', '&':'7', '*':'8', '(':'9', ')':'0',
+  '_':'-', '+':'=', '{':'[', '}':']', '|':'\\', ':':';', '"':"'", '<':',', '>':'.', '?':'/', '~':'`'
+};
+
+const KEY_ROWS = [
+  ['`','1','2','3','4','5','6','7','8','9','0','-','=', {label:'⌫', wide:true, key:'backspace'}],
+  [{label:'Tab', wide:true, key:'tab'}, 'q','w','e','r','t','y','u','i','o','p','[',']','\\'],
+  [{label:'Caps', wide:true, key:'caps'}, 'a','s','d','f','g','h','j','k','l',';',"'", {label:'Enter', wide:true, key:'enter'}],
+  [{label:'Shift', wide:true, key:'shift'}, 'z','x','c','v','b','n','m',',','.','/', {label:'Shift', wide:true, key:'shift'}],
+  [{label:'space', wide:true, key:'space', space:true}]
+];
+
+/* =========================================================
+   Progress state (in-memory only, resets on reload)
+   ========================================================= */
+const progress = {}; // lessonId -> { done, bestWpm, bestAcc }
+
+function allLessons(){
+  return LEVELS.flatMap(l => l.lessons.map(les => ({...les, levelId: l.id})));
+}
+
+function updateHeaderStats(){
+  const total = allLessons().length;
+  const doneList = Object.values(progress).filter(p => p.done);
+  const completed = doneList.length;
+  const bestWpm = doneList.reduce((m,p) => Math.max(m, p.bestWpm||0), 0);
+  document.getElementById('headerCompleted').textContent = completed;
+  document.getElementById('headerTotal').textContent = total;
+  document.getElementById('headerBestWpm').textContent = bestWpm;
+}
+
+/* =========================================================
+   Typing Engine — reusable for hero demo + practice lessons
+   ========================================================= */
+class TypingEngine {
+  constructor({ textEl, inputEl, boxEl, onUpdate, onComplete }){
+    this.textEl = textEl;
+    this.inputEl = inputEl;
+    this.boxEl = boxEl || null;
+    this.onUpdate = onUpdate || (()=>{});
+    this.onComplete = onComplete || (()=>{});
+    this.target = '';
+    this.spans = [];
+    this.startTime = null;
+    this.prevLength = 0;
+    this.totalKeystrokes = 0;
+    this.correctKeystrokes = 0;
+    this.finished = false;
+    this.timerId = null;
+    this.duration = null; // for timed mode
+    this.remaining = null;
+
+    this.inputEl.addEventListener('input', () => this._onInput());
+    this.inputEl.addEventListener('paste', e => e.preventDefault());
+    if (this.boxEl){
+      this.boxEl.addEventListener('click', () => this.inputEl.focus());
+    }
+    this.textEl.addEventListener('click', () => this.inputEl.focus());
+  }
+
+  loadText(text, { duration = null } = {}){
+    this.target = text;
+    this.duration = duration;
+    this.remaining = duration;
+    this.reset();
+    this._render();
+  }
+
+  reset(){
+    this.startTime = null;
+    this.prevLength = 0;
+    this.totalKeystrokes = 0;
+    this.correctKeystrokes = 0;
+    this.finished = false;
+    this.inputEl.value = '';
+    if (this.timerId){ clearInterval(this.timerId); this.timerId = null; }
+    if (this.duration) this.remaining = this.duration;
+    this._render();
+    this._pushStats();
+  }
+
+  focus(){ this.inputEl.focus(); }
+
+  _render(){
+    this.textEl.innerHTML = '';
+    this.spans = [];
+    for (const ch of this.target){
+      const span = document.createElement('span');
+      span.className = 'char';
+      span.textContent = ch;
+      this.textEl.appendChild(span);
+      this.spans.push(span);
+    }
+  }
+
+  _startTimerIfNeeded(){
+    if (this.duration && !this.timerId){
+      this.timerId = setInterval(() => {
+        this.remaining -= 1;
+        if (this.remaining <= 0){
+          this.remaining = 0;
+          clearInterval(this.timerId);
+          this.timerId = null;
+          this._finish(true);
+        }
+        this._pushStats();
+      }, 1000);
+    }
+  }
+
+  _onInput(){
+    if (this.finished) return;
+    let value = this.inputEl.value;
+
+    if (value.length > this.target.length){
+      value = value.slice(0, this.target.length);
+      this.inputEl.value = value;
+    }
+
+    if (this.startTime === null && value.length > 0){
+      this.startTime = performance.now();
+      this._startTimerIfNeeded();
+    }
+
+    // update keystroke counters only when growing (typing forward)
+    if (value.length > this.prevLength){
+      for (let i = this.prevLength; i < value.length; i++){
+        this.totalKeystrokes++;
+        if (value[i] === this.target[i]) this.correctKeystrokes++;
+      }
+    }
+    this.prevLength = value.length;
+
+    // paint spans
+    for (let i = 0; i < this.spans.length; i++){
+      const span = this.spans[i];
+      span.classList.remove('correct','incorrect','current');
+      if (i < value.length){
+        span.classList.add(value[i] === this.target[i] ? 'correct' : 'incorrect');
+      } else if (i === value.length){
+        span.classList.add('current');
+      }
+    }
+    if (value.length >= this.spans.length && this.spans.length){
+      // ensure some scroll-into-view near the end
+      this.spans[this.spans.length-1].scrollIntoView({block:'nearest', inline:'nearest'});
+    } else if (this.spans[value.length]){
+      this.spans[value.length].scrollIntoView({block:'nearest', inline:'nearest'});
+    }
+
+    this._pushStats();
+
+    if (!this.duration && value.length === this.target.length){
+      this._finish(false);
+    }
+  }
+
+  _elapsedMinutes(){
+    if (!this.startTime) return 0;
+    const now = this.duration && this.remaining === 0 ? this.startTime + this.duration*1000 : performance.now();
+    return Math.max((now - this.startTime) / 60000, 1/3600);
+  }
+
+  _computeStats(){
+    const minutes = this._elapsedMinutes();
+    const wpm = this.startTime ? Math.round((this.correctKeystrokes / 5) / minutes) : 0;
+    const accuracy = this.totalKeystrokes ? Math.round((this.correctKeystrokes / this.totalKeystrokes) * 100) : 100;
+    const errors = this.totalKeystrokes - this.correctKeystrokes;
+    let timeLabel;
+    if (this.duration){
+      timeLabel = (this.remaining ?? this.duration) + 's';
+    } else {
+      const secs = this.startTime ? Math.round((performance.now() - this.startTime)/1000) : 0;
+      timeLabel = secs + 's';
+    }
+    return { wpm, accuracy, errors, timeLabel };
+  }
+
+  _pushStats(){
+    this.onUpdate(this._computeStats());
+  }
+
+  _finish(byTimer){
+    this.finished = true;
+    if (this.timerId){ clearInterval(this.timerId); this.timerId = null; }
+    this.inputEl.blur();
+    const stats = this._computeStats();
+    this.onComplete(stats, byTimer);
+  }
+}
+
+/* =========================================================
+   Hero demo wiring
+   ========================================================= */
+const demoEngine = new TypingEngine({
+  textEl: document.getElementById('demoText'),
+  inputEl: document.getElementById('demoInput'),
+  boxEl: document.getElementById('demoText'),
+  onUpdate: (stats) => {
+    document.getElementById('demoWpm').textContent = stats.wpm;
+    document.getElementById('demoAcc').textContent = stats.accuracy;
+    document.getElementById('demoStatus').textContent = stats.wpm || stats.accuracy < 100 ? 'typing…' : 'click the text';
+  },
+  onComplete: () => {
+    document.getElementById('demoStatus').textContent = 'done — nice!';
+  }
+});
+demoEngine.loadText(HERO_DEMO_TEXT);
+
+document.getElementById('demoResetBtn').addEventListener('click', () => {
+  demoEngine.reset();
+  document.getElementById('demoStatus').textContent = 'click the text';
+});
+
+/* =========================================================
+   Navigation state
+   ========================================================= */
+let currentLevelIndex = 0;
+let currentLessonRef = null; // { levelIndex, lessonIndex }
+
+const levelNav = document.getElementById('levelNav');
+LEVELS.forEach((lvl, idx) => {
+  const btn = document.createElement('button');
+  btn.textContent = lvl.name;
+  btn.className = idx === 0 ? 'active' : '';
+  btn.addEventListener('click', () => selectLevel(idx));
+  levelNav.appendChild(btn);
+});
+
+function selectLevel(idx){
+  currentLevelIndex = idx;
+  [...levelNav.children].forEach((b,i) => b.classList.toggle('active', i===idx));
+  document.getElementById('levelTitle').textContent = LEVELS[idx].title;
+  document.getElementById('levelDesc').textContent = LEVELS[idx].desc;
+  renderLessonGrid();
+  showLessons();
+}
+
+function renderLessonGrid(){
+  const level = LEVELS[currentLevelIndex];
+  const grid = document.getElementById('lessonGrid');
+  grid.innerHTML = '';
+  level.lessons.forEach((lesson, i) => {
+    const p = progress[lesson.id];
+    const card = document.createElement('button');
+    card.className = 'lesson-card';
+    const badge = p && p.done ? `<span class="lesson-badge">✓ done</span>` : '';
+    card.innerHTML = `
+      <div class="lesson-top">
+        <span class="lesson-index">0${i+1}</span>
+        ${badge}
+      </div>
+      <h3>${lesson.title}</h3>
+      <p>${lesson.desc}</p>
+      <div class="lesson-meta">
+        <span>${lesson.type === 'timed' ? lesson.duration + 's test' : lesson.type}</span>
+        <span>${p ? 'best ' : ''}<b>${p ? p.bestWpm : '—'}</b>${p ? ' wpm' : ''}</span>
+      </div>
+    `;
+    card.addEventListener('click', () => openLesson(currentLevelIndex, i));
+    grid.appendChild(card);
+  });
+  updateLevelProgress();
+}
+
+function updateLevelProgress(){
+  const level = LEVELS[currentLevelIndex];
+  const done = level.lessons.filter(l => progress[l.id] && progress[l.id].done).length;
+  const total = level.lessons.length;
+  document.getElementById('levelProgressLabel').textContent = `${done}/${total} done`;
+  document.getElementById('levelProgressBar').style.width = `${(done/total)*100}%`;
+}
+
+function showLessons(){
+  document.getElementById('lessonsSection').classList.remove('hidden');
+  document.getElementById('practiceSection').classList.add('hidden');
+}
+
+function showPractice(){
+  document.getElementById('lessonsSection').classList.add('hidden');
+  document.getElementById('practiceSection').classList.remove('hidden');
+  document.getElementById('practiceSection').scrollIntoView({behavior:'smooth', block:'start'});
+}
+
+document.getElementById('startLearningBtn').addEventListener('click', () => { selectLevel(0); });
+document.getElementById('jumpAdvancedBtn').addEventListener('click', () => { selectLevel(2); });
+document.getElementById('backToLessonsBtn').addEventListener('click', showLessons);
+
+/* =========================================================
+   Practice engine wiring
+   ========================================================= */
+const practiceTextEl = document.getElementById('practiceText');
+const practiceInputEl = document.getElementById('practiceInput');
+const practiceBoxEl = document.getElementById('practiceTextBox');
+
+const practiceEngine = new TypingEngine({
+  textEl: practiceTextEl,
+  inputEl: practiceInputEl,
+  boxEl: practiceBoxEl,
+  onUpdate: (stats) => {
+    document.getElementById('statWpm').textContent = stats.wpm;
+    document.getElementById('statAcc').textContent = stats.accuracy;
+    document.getElementById('statTime').textContent = stats.timeLabel;
+    document.getElementById('statErr').textContent = stats.errors;
+  },
+  onComplete: (stats) => {
+    finishLesson(stats);
+  }
+});
+
+// unlock the "tap to start" hint styling and drive the virtual keyboard
+practiceInputEl.addEventListener('focus', () => practiceBoxEl.classList.add('locked'));
+practiceInputEl.addEventListener('input', updateKeyboardHighlight);
+
+function openLesson(levelIndex, lessonIndex){
+  currentLessonRef = { levelIndex, lessonIndex };
+  const lesson = LEVELS[levelIndex].lessons[lessonIndex];
+  document.getElementById('practiceTitle').textContent = lesson.title;
+  document.getElementById('practiceSub').textContent = `${LEVELS[levelIndex].name} · ${lesson.type === 'timed' ? lesson.duration + 's timed test' : lesson.desc}`;
+  document.getElementById('statTimeLbl').textContent = lesson.type === 'timed' ? 'Time left' : 'Time';
+
+  practiceEngine.loadText(lesson.text, lesson.type === 'timed' ? { duration: lesson.duration } : {});
+  document.getElementById('practiceView').classList.remove('hidden');
+  document.getElementById('resultsView').classList.add('hidden');
+  buildKeyboard();
+  updateKeyboardHighlight();
+  showPractice();
+  setTimeout(() => practiceInputEl.focus(), 50);
+}
+
+document.getElementById('restartLessonBtn').addEventListener('click', () => {
+  practiceEngine.reset();
+  updateKeyboardHighlight();
+  practiceInputEl.focus();
+});
+
+function finishLesson(stats){
+  const { levelIndex, lessonIndex } = currentLessonRef;
+  const lesson = LEVELS[levelIndex].lessons[lessonIndex];
+  const prev = progress[lesson.id] || { done:false, bestWpm:0, bestAcc:0 };
+  progress[lesson.id] = {
+    done: true,
+    bestWpm: Math.max(prev.bestWpm, stats.wpm),
+    bestAcc: Math.max(prev.bestAcc, stats.accuracy)
+  };
+  updateHeaderStats();
+
+  document.getElementById('resultsHeading').textContent =
+    stats.accuracy >= 97 ? 'Excellent run' : stats.accuracy >= 85 ? 'Lesson complete' : 'Lesson complete — try for accuracy next time';
+  document.getElementById('resultsMsg').textContent =
+    `You typed at ${stats.wpm} words per minute with ${stats.accuracy}% accuracy.`;
+  document.getElementById('resWpm').textContent = stats.wpm;
+  document.getElementById('resAcc').textContent = stats.accuracy + '%';
+  document.getElementById('resTime').textContent = stats.timeLabel;
+  document.getElementById('resErr').textContent = stats.errors;
+
+  document.getElementById('practiceView').classList.add('hidden');
+  document.getElementById('resultsView').classList.remove('hidden');
+
+  const hasNext = lessonIndex < LEVELS[levelIndex].lessons.length - 1;
+  const nextBtn = document.getElementById('nextLessonBtn');
+  nextBtn.textContent = hasNext ? 'Next lesson →' : 'Back to lessons';
+  nextBtn.onclick = () => {
+    if (hasNext){
+      openLesson(levelIndex, lessonIndex + 1);
+    } else {
+      renderLessonGrid();
+      showLessons();
+    }
+  };
+}
+
+document.getElementById('retryBtn').addEventListener('click', () => {
+  const { levelIndex, lessonIndex } = currentLessonRef;
+  openLesson(levelIndex, lessonIndex);
+});
+
+/* =========================================================
+   Virtual keyboard
+   ========================================================= */
+function buildKeyboard(){
+  const kb = document.getElementById('keyboard');
+  kb.innerHTML = '';
+  KEY_ROWS.forEach(row => {
+    const rowEl = document.createElement('div');
+    rowEl.className = 'krow';
+    row.forEach(k => {
+      const isObj = typeof k === 'object';
+      const keyChar = isObj ? k.key : k;
+      const label = isObj ? k.label : k;
+      const el = document.createElement('div');
+      el.className = 'key';
+      if (isObj && k.wide) el.classList.add('wide');
+      if (isObj && k.space) el.classList.add('space');
+      if (keyChar === 'f' || keyChar === 'j') el.classList.add('home');
+      el.dataset.key = keyChar;
+      el.textContent = label;
+      rowEl.appendChild(el);
+    });
+    kb.appendChild(rowEl);
+  });
+}
+
+function updateKeyboardHighlight(){
+  const kb = document.getElementById('keyboard');
+  if (!kb) return;
+  kb.querySelectorAll('.key').forEach(el => el.classList.remove('active','active-shift'));
+
+  const target = practiceEngine.target;
+  const idx = practiceInputEl.value.length;
+  if (idx >= target.length) return;
+  let ch = target[idx];
+
+  if (ch === ' '){
+    const spaceKey = kb.querySelector('[data-key="space"]');
+    if (spaceKey) spaceKey.classList.add('active');
+    return;
+  }
+
+  let needsShift = false;
+  let baseKey = ch.toLowerCase();
+
+  if (/[A-Z]/.test(ch)){
+    needsShift = true;
+  } else if (SHIFT_MAP[ch]){
+    baseKey = SHIFT_MAP[ch];
+    needsShift = true;
+  }
+
+  const keyEl = kb.querySelector(`[data-key="${CSS.escape(baseKey)}"]`);
+  if (keyEl) keyEl.classList.add('active');
+  if (needsShift){
+    kb.querySelectorAll('[data-key="shift"]').forEach(el => el.classList.add('active-shift'));
+  }
+}
+
+document.getElementById('toggleKeyboardBtn').addEventListener('click', (e) => {
+  const wrap = document.getElementById('keyboardWrap');
+  wrap.classList.toggle('show-mobile');
+  e.target.textContent = wrap.classList.contains('show-mobile') ? 'Hide keyboard' : 'Show keyboard';
+});
+
+/* =========================================================
+   Reset progress
+   ========================================================= */
+document.getElementById('resetProgressBtn').addEventListener('click', () => {
+  Object.keys(progress).forEach(k => delete progress[k]);
+  updateHeaderStats();
+  renderLessonGrid();
+});
+
+/* =========================================================
+   Init
+   ========================================================= */
+selectLevel(0);
+updateHeaderStats();
+
+</script>
+</body>
+</html>
